@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import { Container } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import "../../styles/casemanagement.module.css";
 import Footer from "./Footer";
@@ -20,8 +20,11 @@ import AddTagModal from "./Modals/AddTagModal";
   in this variable 
 */
 export const ManagementContainerQuery = `
-query MyQuery {
-  __typename 
+query QueryCategories {
+  category {
+    id
+    name
+  }
 }
 `;
 // END TODO
@@ -43,6 +46,8 @@ const CaseManagementContainer: React.FC = (props) => {
     query: ManagementContainerQuery,
   });
 
+  const CaseManagementCategory: ManagementCategory | null = data ? data?.category : null;
+
   return (
     <>
       <h5 className="title">Home Page</h5>
@@ -53,7 +58,12 @@ const CaseManagementContainer: React.FC = (props) => {
           a CaseCategory for every category in the response.
           Remember, the response is stored in the "data" variable!
         */}
-
+        {CaseManagementCategory ? data.category.map((cat_id: ManagementCategory) => {
+                return <Grid item xs={4}>
+                        <CaseCategory category_id={cat_id.id} />
+                      </Grid>;
+              })
+            : "Something went wrong!"}
         {/* END TODO */}
       </Grid>
 

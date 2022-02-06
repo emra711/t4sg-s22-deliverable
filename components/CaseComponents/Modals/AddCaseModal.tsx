@@ -16,6 +16,7 @@ import {
   ManagementCategory,
   ManagementContainerQuery,
 } from "../CaseManagementContainer";
+import { StringValueNode } from "graphql";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,8 +46,14 @@ type AddCaseModalProps = {
   in this variable 
 */
 const InsertCaseMutation = `
-query MyQuery {
-  __typename # Placeholder value
+mutation AddCaseMutation($category_id: Int = 10, $description: String = "", $name: String = "", $status: String = "") {
+  insert_cases_one(object: {category_id: $category_id, description: $description, name: $name, status: $status}) {
+    id
+    description
+    category_id
+    name
+    status
+  }
 }
 `;
 // END TODO
@@ -129,6 +136,11 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
                 to render a MenuItem with category id as the value, and the 
                 category name as the text.
               */}
+              {data ? data.category.map((category: any, index: number) => {
+                    return <MenuItem key={index} value={category.id}>
+                            {category.name}
+                          </MenuItem>
+                    }) : null}
               {/* END TODO */}
             </Select>
           </FormControl>

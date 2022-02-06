@@ -43,9 +43,9 @@ const CaseCard: React.FC<CaseCardProps> = (props) => {
             width="100%"
           >
             <CardTitle tag="h3">{caseData.name}</CardTitle>
-            <CloseIcon />
+              <CloseIcon />
           </Box>
-
+          
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             {caseData.status}
           </CardSubtitle>
